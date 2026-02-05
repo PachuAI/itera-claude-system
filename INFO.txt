@@ -1,0 +1,39 @@
+CLAUDE MEMORY SYSTEM - PAQUETE UNIVERSAL
+=========================================
+
+Sistema de memoria para Claude Code, listo para usar en cualquier proyecto.
+
+CONTENIDO:
+- Sistema load/save/commit
+- Agente doc-changelog (Haiku)
+- Templates para PROJECT, STATE, CHANGELOG, GUARDRAILS
+- Documentación completa (README, BOOTSTRAP, QUICK-START)
+
+STACK-AGNOSTIC:
+Funciona con cualquier lenguaje/framework (Next.js, Laravel, Python, Go, etc.)
+
+ARCHIVOS INCLUIDOS: 12 archivos markdown
+- 4 docs principales (README, BOOTSTRAP, QUICK-START, INFO)
+- 3 comandos (load, save, commit)
+- 1 agente (doc-changelog)
+- 4 templates (PROJECT, STATE, CHANGELOG, GUARDRAILS)
+
+CARACTERÍSTICAS PRINCIPALES:
+- STATE.md: Estado conciso, se sobrescribe cada /save (max 150 líneas)
+- CHANGELOG.md: Historial completo, se acumula cada /save
+- GUARDRAILS.md: Errores conocidos divididos en:
+  * Parte 1: Específicos del stack (se reciclan por tecnología)
+  * Parte 2: Generales (DevOps, Git, Infra - se reciclan a todos)
+
+FLUJO:
+/load → Lee STATE + GUARDRAILS → Resume → Trabaja
+/save → Errores → GUARDRAILS → STATE → CHANGELOG → Commit
+/commit → Commit intermedio durante la sesión
+
+FECHA DE ACTUALIZACIÓN: 05 Feb 2026
+ORIGEN: Proyecto bambu_v2 (Laravel) + alquimica-hub (Next.js 16)
+VALIDADO: Múltiples sesiones de desarrollo real
+
+==================================================
+
+Lee README.md para empezar.
