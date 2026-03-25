@@ -1,0 +1,7 @@
+Lee el KICKSTART.md para entender como arrancar el proyecto, y luego ejecuta /kickstart-nextjs para el setup completo. Cuando este todo terminado y seteado, y nuestra app de nextjs ya lista, ejecutar /cleanup-boilerplate para eliminar los residuos del setup y que nos quede nuestro proyecto limpio.
+
+Nombre: *NOMBRE*
+Descripcion: *QUE HACE O PARA QUE ES / BREVE*
+Modulos: db, auth
+PG master pass: passwordPostgreSQL2025
+Repo: GitHub privado
