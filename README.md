@@ -39,6 +39,7 @@ Sistema de productividad para proyectos Next.js con Claude Code. Contiene el tem
 │
 ├── PROJECT-MAP.md          # Mapa de proyectos por capas y grupos de afinidad
 ├── INFRA.md                # Indice de deploy (Coolify UUIDs, URLs, puertos, DBs)
+├── E2E-TESTING-GUIDE.md    # Guia de testing E2E con Playwright (setup, patrones, workflow IA)
 ├── modelo prompt.txt       # Prompt modelo para iniciar un proyecto
 ├── INFO.txt                # Descripcion general del sistema
 └── .planning/              # Planning interno de este repo

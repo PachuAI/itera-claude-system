@@ -14,8 +14,23 @@
 8. **Auditoria operacional**: despues de agregar/modificar features con IA, integraciones externas, o acciones de dominio sensibles -> correr `.planning/audits/OPERATIONAL-AUDIT.md` -> cubre observabilidad, costos IA sin techo, audit trail dentro de $transaction.
 9. **CODEBASE-MAP**: `.planning/CODEBASE-MAP.md` es el indice del sistema — leerlo al entrar en plan mode ANTES de explorar el codigo. Al crear/modificar cualquier service, API route, server action, shared component, schema, util o hook -> actualizar la entrada correspondiente antes de commitear.
 10. **Mini-audit por archivo**: al terminar de escribir un action, API route, service o page -> ANTES de pasar al siguiente archivo, verificar los 5 puntos del checklist correspondiente de Guardrails. NO acumular archivos sin verificar.
-11. **Tipos compartidos desde el primer uso**: al definir un `type` o `interface` -> si puede usarse en 2+ archivos -> crearlo en `src/lib/types/` desde el inicio, NUNCA local. Si ya existe algo similar en `src/lib/types/` -> importar, NUNCA redefinir.
-12. **Scripts de enforcement**: si existen `scripts/check-*.sh` -> ejecutar `bash scripts/check-all.sh` antes de commitear features que tocan 3+ archivos. No reemplaza `/check` pero atrapa errores mecanicos.
+11. **Tipos compartidos desde el primer uso**: al definir un `type` o `interface` -> si puede usarse en 2+ archivos -> crearlo en `src/lib/types.ts` desde el inicio, NUNCA local. Si ya existe algo similar en `src/lib/types.ts` -> importar, NUNCA redefinir.
+12. **Scripts de enforcement OBLIGATORIO**: `bash scripts/check-all.sh` -> correr SIEMPRE antes de commitear, sin excepcion. Exit code 1 = NO commitear hasta resolver. "Los errores son preexistentes" NO es excusa — si el check falla, arreglarlo en esa sesion. No reemplaza `/check` pero atrapa errores mecanicos que se acumulan silenciosamente.
+13. **Datos configurables desde admin -> NUNCA hardcodear en componentes publicos**: banners, sliders, mensajes, colores, toggles de features -> SIEMPRE leer de la DB/config (ej: `getCachedSiteConfig()`). El toggle del admin DEBE controlar la visibilidad real en el frontend — hardcodear datos de demo que ignoran el estado del admin es un bug de diseño.
+
+## Convenciones fijas
+
+Estas convenciones son obligatorias en todo proyecto nuevo. No hay alternativas.
+
+- **Route groups**: `(public)` para paginas publicas, `(admin)` para admin — NO usar `(protected)`, `(auth)`, `(dashboard)` como route groups
+- **Admin pages**: `src/app/(admin)/admin/` — NO `src/app/admin/(protected)/`
+- **Componentes compartidos**: kebab-case — `empty-state.tsx`, NO `EmptyState.tsx` (consistente con shadcn)
+- **Types**: flat — `src/lib/types.ts`, NO `src/lib/types/actions.ts` subdirectorio
+- **Auth guards en API routes**: `requireApiAccess()` o `getSession()` — importar de `src/lib/session.ts` o `src/lib/auth-action.ts`
+- **Services**: `src/lib/services/[modulo].service.ts`
+- **Utils**: `src/lib/utils/[nombre].ts`
+
+---
 
 ## Scopes de Commits
 
@@ -242,7 +257,7 @@
 - Service layer: `src/lib/services/[modulo].service.ts` -> NUNCA Prisma directo en actions
 - Server actions: auth -> authorize -> validate -> service -> audit -> revalidate
 - No numeros magicos -> `@/lib/constants`
-- Tipos usados en 2+ archivos -> extraer a `src/lib/types/`
+- Tipos usados en 2+ archivos -> extraer a `src/lib/types.ts`
 - Queries repetidas -> extraer a helper, no copiar
 - Funciones de formateo (fecha, tamano, moneda) -> SIEMPRE en `src/lib/utils/` -> NUNCA locales en componentes
 - Async fire-and-forget -> loguear con ID del recurso, no solo `.catch(console.error)`

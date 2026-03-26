@@ -235,7 +235,7 @@ Editar existentes:
 **Tipos y utils compartidos (siempre)**:
 
 ```typescript
-// src/lib/types/actions.ts
+// src/lib/types.ts
 export type ActionResult = { success: true } | { success: false; error: string }
 ```
 
@@ -279,7 +279,7 @@ export const env = validateEnv()
 **Componentes compartidos (siempre)**:
 
 ```tsx
-// src/components/shared/EmptyState.tsx
+// src/components/shared/empty-state.tsx
 import type { LucideIcon } from 'lucide-react'
 
 interface EmptyStateProps {
@@ -324,8 +324,8 @@ export async function requireAuthAction(): Promise<ActionResult | null> {
 ```
 
 ```tsx
-// src/app/admin/(protected)/error.tsx — 'use client', estilo admin + retry
-// src/app/admin/(protected)/loading.tsx — spinner admin
+// src/app/(admin)/admin/error.tsx — 'use client', estilo admin + retry
+// src/app/(admin)/admin/loading.tsx — spinner admin
 ```
 
 **Scripts de verificación (siempre)**:

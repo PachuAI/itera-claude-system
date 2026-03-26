@@ -21,8 +21,9 @@ violations=0
 
 for file in $files; do
   if ! grep -q "export const metadata\|export async function generateMetadata\|export function generateMetadata" "$file"; then
-    # Excluir pages de admin (protected y login) que no necesitan metadata pública
-    if echo "$file" | grep -q "(protected)\|admin/login"; then
+    # Excluir pages de admin que no necesitan metadata pública
+    # Cubre route groups: (protected), (admin), y login
+    if echo "$file" | grep -q "(protected)\|(admin)\|admin/login"; then
       echo -e "${YELLOW}SIN METADATA (admin, OK)${NC}: $file"
     else
       echo -e "${RED}SIN METADATA${NC}: $file"

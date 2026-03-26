@@ -35,18 +35,18 @@ check_required ".nvmrc"
 check_required "Dockerfile"
 check_required ".dockerignore"
 check_required "src/lib/env.ts"
-check_required "src/lib/types/actions.ts"
 check_required "src/lib/utils/slugify.ts"
-check_required "src/components/shared/EmptyState.tsx"
+check_required "src/lib/types.ts"
+check_required "src/components/shared/empty-state.tsx"
 
 # Error boundaries y loading (al menos el público)
 check_required "src/app/(public)/error.tsx"
 check_required "src/app/(public)/loading.tsx"
 
-# Opcionales (si hay admin)
-if [ -d "src/app/admin" ]; then
-  check_optional "src/app/admin/(protected)/error.tsx"
-  check_optional "src/app/admin/(protected)/loading.tsx"
+# Opcionales (si hay admin — route group (admin) es la convencion)
+if [ -d "src/app/(admin)" ]; then
+  check_optional "src/app/(admin)/admin/error.tsx"
+  check_optional "src/app/(admin)/admin/loading.tsx"
 fi
 
 # Si hay auth module
