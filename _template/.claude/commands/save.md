@@ -1,6 +1,6 @@
 ---
 description: 'Guarda progreso al finalizar sesion. Actualiza docs de planificacion.'
-model: 'sonnet'
+model: 'claude-sonnet-4-6'
 ---
 
 # Guardado de Sesion

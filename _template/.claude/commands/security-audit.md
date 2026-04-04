@@ -1,6 +1,6 @@
 ---
 description: 'Auditoría de seguridad: ownership, auth guards, campos de control, endpoints públicos. Ejecutar después de modificar API routes, services con writes, o modelos nuevos.'
-model: 'sonnet'
+model: 'claude-sonnet-4-6'
 ---
 
 # Security Audit

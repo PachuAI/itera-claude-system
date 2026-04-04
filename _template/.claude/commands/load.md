@@ -1,6 +1,6 @@
 ---
 description: 'Carga contexto al iniciar sesion. Ejecutar despues de /clear.'
-model: 'sonnet'
+model: 'claude-sonnet-4-6'
 ---
 
 # Carga de Contexto
