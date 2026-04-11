@@ -2,7 +2,7 @@
 
 > Referencia centralizada de URLs, Coolify UUIDs, puertos, DBs y env vars por proyecto.
 > Datos obtenidos via Coolify CLI (`coolify app list` + `coolify app env list`).
-> Ultima actualizacion: 2026-04-12
+> Ultima actualizacion: 2026-03-25
 
 ---
 
@@ -22,14 +22,6 @@
 |-------|-------|
 | **IP** | 89.167.29.201 |
 | **Panel** | Coolify — https://coolify-alquimica.itera.world |
-
-### itera-static (sitios estaticos, WordPress, servicios internos)
-| Campo | Valor |
-|-------|-------|
-| **IP** | 37.27.248.173 |
-| **Plan** | Hetzner CX23 (4 GB RAM, 40 GB disco) |
-| **OS** | Ubuntu 24.04 LTS |
-| **Panel** | Coolify — https://coolify-static.itera.world |
 
 ---
 
@@ -180,102 +172,6 @@
 
 ---
 
-### linkea2
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://linkea2.com |
-| **Puerto dev** | 3000 |
-| **Coolify UUID app** | `h13u60btnluekuesd7gsr469` |
-| **Coolify UUID PG** | `wn5vq32bwbgdpfkamb72ajce` (puerto publico: 5433) |
-| **Git branch** | master |
-| **Notas** | Path-based tenant routing. Multi-tenant SaaS. |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| DATABASE_URL | Conexion PostgreSQL |
-| BETTER_AUTH_SECRET | Firma de sesiones |
-| BETTER_AUTH_URL | URL base para auth |
-| NEXT_PUBLIC_SITE_URL | URL del sitio (client-side) |
-| DEFAULT_TENANT_SLUG | Slug del tenant por defecto |
-| R2_ACCOUNT_ID | Cloudflare R2 storage |
-| R2_ACCESS_KEY_ID | R2 auth |
-| R2_SECRET_ACCESS_KEY | R2 auth |
-| R2_BUCKET_NAME | R2 bucket |
-| R2_PUBLIC_URL | URL publica de assets |
-| ADMIN_EMAIL | Email admin seed |
-| ADMIN_PASSWORD | Password admin seed |
-| ITERA_API_KEY | API key interna ITERA |
-| CRON_SECRET | Auth para cron jobs |
-| NODE_ENV | production |
-
----
-
-### shopear (shope.ar)
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://shope.ar |
-| **Dominios adicionales** | admin.shope.ar, apple.shope.ar, ropaurbana.shope.ar |
-| **Puerto dev** | 3000 |
-| **Coolify UUID app** | `t1ect6gnjp8068ccu7lah6n8` |
-| **Coolify UUID PG** | `uxoszayiqygjp8rib3kdddvg` |
-| **Git branch** | main |
-| **Notas** | SaaS multi-tenant de e-commerce. Subdominios por tenant. |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| DATABASE_URL | Conexion PostgreSQL |
-| BETTER_AUTH_SECRET | Firma de sesiones |
-| BETTER_AUTH_URL | URL base para auth |
-| NEXT_PUBLIC_SITE_URL | URL del sitio (client-side) |
-| ADMIN_SEED_SECRET | Secret para ejecutar seed via API |
-| ADMIN_EMAIL | Email admin seed |
-| ADMIN_PASSWORD | Password admin seed |
-| NODE_ENV | production |
-
----
-
-### presskit-ar
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://presskit.ar |
-| **Puerto dev** | 3000 |
-| **Coolify UUID app** | `w65hufobtzbem2fjxp9jpdyg` |
-| **Coolify UUID PG** | `sbs5tj7872hl82u51niqbtp2` |
-| **Git branch** | main |
-| **Notas** | SaaS press kits. Auth.js v5. Re-deployado (antes perdido en migracion cPanel). |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| DATABASE_URL | Conexion PostgreSQL |
-| AUTH_SECRET | NextAuth secret |
-| AUTH_TRUST_HOST | Trust host para proxy |
-| APP_URL | URL base de la app |
-| NEXT_PUBLIC_APP_URL | URL base client-side |
-| NEXTAUTH_URL | NextAuth URL |
-| STORAGE_PROVIDER | Proveedor de storage |
-| AUTH_REQUIRE_EMAIL_VERIFICATION | Verificacion de email requerida |
-| NODE_ENV | production |
-
----
-
-### sistema-gestion-juridico-rer
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://gestion.rerestudiojuridico.com |
-| **Coolify UUID app** | `as4o8k80kgg8s8gs4c80sww4` |
-| **Git branch** | main |
-| **Notas** | Sistema de gestion para cliente RER. Legacy. |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| DB_HOST / DB_PORT / DB_NAME / DB_USER / DB_PASS | Conexion a BD |
-
----
-
 ### pachu.dev
 | Campo | Valor |
 |-------|-------|
@@ -285,84 +181,42 @@
 
 ---
 
-### Databases — Contexto Modern
+### shope-ar (Shopear)
+| Campo | Valor |
+|-------|-------|
+| **URLs** | https://admin.shope.ar, https://apple.shope.ar, https://ropaurbana.shope.ar |
+| **Puerto dev** | 3016 |
+| **Coolify UUID project** | `zlj25fl55tuj1wcxtj8v39hm` |
+| **Coolify UUID app** | `t1ect6gnjp8068ccu7lah6n8` |
+| **Coolify UUID PG** | `uxoszayiqygjp8rib3kdddvg` (postgres:17-alpine, db=`shopear`) |
+| **Repo** | `iteralat/shope-ar` branch `main` |
+| **GitHub App** | `a4skko8o44osocskcossgogs` (coolify-itera-lat) |
+| **Notas** | SaaS multi-tenant. Tiendas por subdominio (apple, ropaurbana). Cookie compartida `.shope.ar`. Extiende seed route con `target:"provision"` para provisionar tenants nuevos via API. `start.sh` corre `prisma db push` en boot |
 
-| # | Nombre | UUID | Imagen | Estado | Puerto publico |
-|---|--------|------|--------|--------|---------------|
-| 1 | itera-modern-mysql-databases | `fow0gsgw4cgksogc40ogsg4o` | mysql:8 | running:healthy | — |
-| 2 | iteralex-db | `jcsokwcw0ks08k8wwwk4wwc0` | postgres:17-alpine | running:healthy | — |
-| 3 | ITERA Estudio - PostgreSQL | `m84wg4kggsgksssg8k0wc000` | postgres:17-alpine | running:healthy | — |
-| 4 | Abundancia Hogar - PostgreSQL | `qvyp1mdigluu25eu1aekpsho` | postgres:17-alpine | running:healthy | — |
-| 5 | presskit-ar-db | `sbs5tj7872hl82u51niqbtp2` | postgres:17-alpine | running:healthy | — |
-| 6 | Shopear - PostgreSQL | `uxoszayiqygjp8rib3kdddvg` | postgres:17-alpine | running:healthy | — |
-| 7 | Linkea2 - PostgreSQL | `wn5vq32bwbgdpfkamb72ajce` | postgres:17-alpine | running:healthy | 5433 |
+**Env vars:**
+| Variable | Proposito |
+|----------|-----------|
+| DATABASE_URL | Conexion PostgreSQL interna |
+| BETTER_AUTH_SECRET | Firma de sesiones |
+| BETTER_AUTH_URL | `https://admin.shope.ar` (platform host — determina cookie domain `.shope.ar` y trusted origins `https://*.shope.ar`) |
+| NEXT_PUBLIC_SITE_URL | `https://admin.shope.ar` |
+| ADMIN_EMAIL | Email del admin global (OWNER de todas las tiendas provisionadas) |
+| ADMIN_PASSWORD | Password admin (usar `--is-literal`) |
+| ADMIN_SEED_SECRET | Bearer token para `/api/admin/seed` |
+| NODE_ENV | production |
+
+**Provisionar tienda nueva:**
+```bash
+curl -k --resolve "admin.shope.ar:443:65.108.148.79" \
+  -X POST https://admin.shope.ar/api/admin/seed \
+  -H "Authorization: Bearer $ADMIN_SEED_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"target":"provision","templateKey":"apple","storeId":"store_tienda","slug":"tienda","subdomain":"tienda","isDefault":false}'
+```
 
 ---
 
 ## Proyectos Deployados — Contexto Alquimica
-
-### alquimica-crm (Bambu CRM v2)
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://gestion.quimicabambu.com.ar |
-| **Puerto dev** | 8000 |
-| **Coolify UUID app** | `jkow84swcog8g8owoosow4ow` |
-| **Coolify UUID PG** | `uw4008o04gsogcc040csko8s` |
-| **Coolify UUID Redis** | `fow8cs84sccc4c0g4k8s84gs` |
-| **Git branch** | master |
-| **Stack** | Laravel 12 · Inertia · React · PG17 · Redis 7.2 |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| APP_NAME | Nombre de la app |
-| APP_ENV | Entorno (production) |
-| APP_DEBUG | Debug mode |
-| APP_URL | URL base |
-| APP_KEY | Encryption key Laravel |
-| DB_CONNECTION / DB_HOST / DB_PORT / DB_DATABASE / DB_USERNAME / DB_PASSWORD | Conexion PostgreSQL |
-| SESSION_DRIVER / SESSION_LIFETIME / SESSION_ENCRYPT | Sesiones (Redis) |
-| CACHE_STORE / CACHE_DRIVER | Cache (Redis) |
-| QUEUE_CONNECTION | Cola de jobs (Redis) |
-| REDIS_CLIENT / REDIS_URL | Conexion Redis |
-| LOG_CHANNEL / LOG_LEVEL | Logging |
-| NIXPACKS_NODE_VERSION | Version de Node para build |
-| NIXPACKS_PHP_FALLBACK_PATH / NIXPACKS_PHP_ROOT_DIR | Config PHP Nixpacks |
-| ASSET_URL | URL de assets |
-| TRUSTED_PROXIES | Proxies confiables (Traefik) |
-| FORCE_HTTPS | Forzar HTTPS |
-
----
-
-### alquimica-crm-staging
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://zkokokgkk8gccoowo0g08ggg.89.167.29.201.sslip.io |
-| **Coolify UUID app** | `zkokokgkk8gccoowo0g08ggg` |
-| **Git branch** | master |
-| **Stack** | Laravel 12 (misma base que CRM prod) |
-| **Notas** | Entorno de staging/testing. Mismas env vars que produccion pero con APP_ENV=staging |
-
-**Env vars:** Mismas keys que alquimica-crm produccion (sin NIXPACKS_PHP_*, ASSET_URL, SESSION_LIFETIME, SESSION_ENCRYPT).
-
----
-
-### bambu-crm-v1-legacy
-| Campo | Valor |
-|-------|-------|
-| **URL** | https://legacy-gestion.quimicabambu.com.ar |
-| **Coolify UUID app** | `vgkgw8ookwok8ooos88o440g` |
-| **Coolify UUID PG** | `i480gg840o4sk0csk8o000o4` |
-| **Git branch** | master |
-| **Notas** | Version legacy del CRM. Se mantiene activa mientras v2 entra en produccion completa. |
-
-**Env vars:**
-| Variable | Proposito |
-|----------|-----------|
-| APP_KEY / APP_URL | Config Laravel basica |
-| DB_HOST / DB_PORT / DB_DATABASE / DB_USERNAME / DB_PASSWORD | Conexion PostgreSQL |
-
----
 
 ### bambu-web-corporativa-catalogo
 | Campo | Valor |
@@ -400,7 +254,7 @@
 | **URL** | https://canal.alquimicaoficial.com.ar |
 | **Puerto dev** | 3003 |
 | **Coolify UUID app** | `nk8044wkokgs84o040sk4wg4` |
-| **Coolify UUID PG** | `boccgcockk48k4sgg00soc44` (puerto publico: 5433) |
+| **Coolify UUID PG** | `boccgcockk48k4sgg00soc44` |
 
 **Env vars:**
 | Variable | Proposito |
@@ -422,117 +276,16 @@
 
 ---
 
-### alquimicaoficial-static-site
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://cw8c8g80os48wso488kwcgg0.89.167.29.201.sslip.io |
-| **Coolify UUID app** | `cw8c8g80os48wso488kwcgg0` |
-| **Git branch** | main |
-| **Notas** | Placeholder viejo. El CMS custom de Alquimica aun no esta deployado. Candidato a eliminar/reemplazar. Sin env vars. |
-
----
-
-### bambuoficial-static (inactivo)
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://c4swcokwsk8w4cook00wwo40.89.167.29.201.sslip.io |
-| **Coolify UUID app** | `c4swcokwsk8w4cook00wwo40` |
-| **Status** | exited:unhealthy |
-| **Notas** | Sitio estatico anterior de Bambu. Reemplazado por bambu-web-corporativa. Sin env vars. Candidato a eliminar. |
-
----
-
-### quimicabambu-redirecter
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://ewwc4swo8sk0o8wk0s448o0c.89.167.29.201.sslip.io |
-| **Coolify UUID app** | `ewwc4swo8sk0o8wk0s448o0c` |
-| **Git branch** | main |
-| **Notas** | Redirector estatico para quimicabambu.com.ar. Sin env vars. |
-
----
-
-### Databases — Contexto Alquimica
-
-| # | Nombre | UUID | Imagen | Estado | Puerto publico |
-|---|--------|------|--------|--------|---------------|
-| 1 | bambu-crm-v1-db | `i480gg840o4sk0csk8o000o4` | postgres:17-alpine | running:healthy | — |
-| 2 | alquimica-hub-db | `boccgcockk48k4sgg00soc44` | postgres:17-alpine | running:healthy | 5433 |
-| 3 | alquimica-crm-db | `uw4008o04gsogcc040csko8s` | postgres:17-alpine | running:healthy | — |
-| 4 | alquimica-redis | `fow8cs84sccc4c0g4k8s84gs` | redis:7.2 | running:healthy | — |
-| 5 | Bambu Web - PostgreSQL | `sssoc4oksk0048gwc8wgs808` | postgres:17-alpine | running:healthy | — |
-
----
-
-## Proyectos Deployados — Contexto Static
-
-### ltgrow-static-site
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://tcc80k488wskwk4cg4c0oggk.37.27.248.173.sslip.io |
-| **Coolify UUID app** | `tcc80k488wskwk4cg4c0oggk` |
-| **Git branch** | main |
-| **Notas** | Sitio estatico LTGrow. Sin dominio custom (ltgrow.com redirige a IG). |
-
----
-
-### rer-static-website
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://nooow8084sk0c0444c8gs8kc.37.27.248.173.sslip.io |
-| **Coolify UUID app** | `nooow8084sk0c0444c8gs8kc` |
-| **Git branch** | master |
-| **Notas** | Sitio estatico de RER Estudio Juridico. Sin dominio custom asignado en Coolify. |
-
----
-
-### angeloditommaso-static-site
-| Campo | Valor |
-|-------|-------|
-| **URL** | http://q8o8cgsw0ogg0sgc40w8k4c4.37.27.248.173.sslip.io |
-| **Coolify UUID app** | `q8o8cgsw0ogg0sgc40w8k4c4` |
-| **Git branch** | master |
-| **Notas** | Sitio estatico angeloditommaso.com. Dominio expira Aug 2026 — pendiente decidir si renovar. |
-
----
-
-### nahuebianchi-static-site
-| Campo | Valor |
-|-------|-------|
-| **URL** | new.nahuebianchi.com |
-| **Coolify UUID app** | `v8ksgs448ckwo40wc08sw4cg` |
-| **Git branch** | main |
-| **Notas** | Presskit Nahue Bianchi. |
-
----
-
-### Servicios — Contexto Static
-
-| # | Nombre | UUID | Tipo | Estado |
-|---|--------|------|------|--------|
-| 1 | itera-phpmyadmin | `z4wckk8k804gcwkc8sc4g0s4` | phpmyadmin | running:healthy |
-| 2 | Vaultwarden | `xsc8c0w8sc8g0g0oowcoocsw` | vaultwarden | running:healthy |
-| 3 | RER Blog Juridico | `cswck8sg0o4gs4cw0gc4kcs8` | wordpress | running:healthy |
-| 4 | Blog LTGrow | `ksok04kc0kw0wco4koww4c00` | wordpress | running:healthy |
-
-### Databases — Contexto Static
-
-| # | Nombre | UUID | Imagen | Estado |
-|---|--------|------|--------|--------|
-| 1 | itera-databases-mysql | `hkgokskk04socsok0kk8osw4` | mysql:8 | running:healthy |
-
-**Nota:** MySQL compartido por todas las instancias WordPress y phpMyAdmin.
-
----
-
 ## Proyectos No Deployados
 
 | Proyecto | Puerto dev | DB | Estado |
 |----------|-----------|-----|--------|
+| alquimica-web-corporativa | 3010 | `alquimica` | Sin deploy configurado |
 | itera-chatbots-platform | 3006 | `chatbot` | Deploy planeado Fase 7 |
 | itera-pages | — | Sin DB | En desarrollo |
 | itera-tube | 3004 | `iteratube` | Sin deploy (local only) |
 | itera-yt-downloader | 3000 | — | Sin planning de deploy |
+| presskit-ar | 3000 | `presskit` | Estuvo deployado, se perdio en migracion de VPS (remocion cPanel). Re-deploy pendiente, proyecto en alfa. |
 | wsp-facil | 3007 | — | Deploy planeado Sprint 3 |
 
 ---
@@ -562,7 +315,7 @@
 
 ## Coolify CLI
 
-Instalado en ambas maquinas. Desktop: `C:\Program Files\Coolify\coolify`. Laptop: `/usr/local/bin/coolify` (v1.6.0). Usar `coolify context use <nombre>` antes de operar.
+Instalado en `C:\Program Files\Coolify\coolify`. Usar `coolify context use <nombre>` antes de operar.
 
 | Contexto | FQDN | VPS |
 |----------|------|-----|
@@ -582,6 +335,6 @@ coolify database list                     # listar DBs
 
 **Notas:**
 - Todos los deploys usan auto-deploy via GitHub App (`coolify-itera-modern`).
-- Post-deployment command estandar para proyectos con Prisma: `npx prisma db push`.
+- Post-deployment command estandar para proyectos con Prisma: `pnpm exec prisma db push`.
 - presskit-ar no aparece en ningún contexto Coolify — posiblemente fue eliminado del panel. Verificar.
 - itera-tube no aparece en ningún contexto Coolify — nunca fue deployado.

@@ -2,7 +2,7 @@
 
 > Indice de todos los proyectos, clasificados por capas funcionales y agrupados por afinidad.
 > Usar para propagar reglas entre proyectos similares (`/sync`).
-> Ultima actualizacion: 2026-03-25
+> Ultima actualizacion: 2026-04-10
 
 ---
 
@@ -11,12 +11,13 @@
 | Proyecto | auth | crud | ai | files | marketing | Otras capas | Estado | Deploy |
 |----------|------|------|----|-------|-----------|-------------|--------|--------|
 | itera-lex | BA+MT | P7 | Anthropic+Google | R2+Drive | landing+blog | calendar, payments, transcription, tts, pdf | activo | si |
-| itera-estudio | BA | P7 | Gemini | R2 | — | — | activo | si |
-| itera-chatbots-platform | BA | P7 | AI SDK v6 | — | — | realtime (SSE widget) | activo | no |
-| abundancia-hogar | BA | P7 | — | R2 | landing+SEO | whatsapp (checkout) | activo | si |
+| itera-estudio | BA | P7 | Gemini | R2 | — | API interna (ecosistema) | activo | si |
+| itera-link | BA | P7 | — (Itera Estudio API) | R2 | landing+SEO | banners IA, link-in-bio, MT en desarrollo | activo | si |
+| shope-ar (Shopear) | BA | P7 | — (Itera Estudio API) | R2 | landing+SEO | whatsapp (checkout), MT en desarrollo | activo | si |
+| itera-chatbots-platform | BA | P7 | AI SDK v6 | — | — | realtime (SSE widget) | stand-by | no |
 | bambu-web-corporativa | BA | P7 | — | R2 | corporativa+catalogo | email (captacion) | activo | si |
 | alquimica-web-corporativa | BA | P7 | — | — | corporativa | email (contacto) | activo | no |
-| alquimica-hub | NA5 | P5 | — | R2 | link-in-bio | precios multi-lista | activo | si |
+| alquimica-hub | NA5 | P5 | — | R2 | link-in-bio | precios multi-lista | legacy | si |
 | presskit-ar | NA5 | P5 | — | R2/local | — | email (nodemailer), pdf | activo | si |
 | itera-tube | NA5 | P5 | Gemini | — | — | tts (ElevenLabs), scraping (yt-dlp) | activo | parcial |
 | wsp-facil | NA5 | P5 | OpenAI+Gemini | — | — | transcription (Groq+Whisper+ElevenLabs) | activo | no |
@@ -31,27 +32,30 @@
 
 ## Grupos de Afinidad
 
-### Grupo 1 — SaaS con IA
+### Grupo 1 — SaaS (con o sin IA)
 
-**Proyectos**: itera-lex, itera-estudio, itera-chatbots-platform
+**Proyectos**: itera-lex, itera-estudio, itera-link, shope-ar (Shopear)
 
-**Stack comun**: Next.js 16 + Prisma 7 + BetterAuth + AI SDK + Tailwind v4 + shadcn/ui
+**Stack comun**: Next.js 16 + Prisma 7 + BetterAuth + Tailwind v4 + shadcn/ui
 
 **Reglas que fluyen dentro del grupo**:
 - BetterAuth (globalThis singleton, nextCookies, disableRefresh, imports, CLI)
 - Prisma 7 completo (prisma.config.ts, generated imports, $transaction, findMany+take)
-- AI: prompts en ingles, rate limiting, confirmacion humana para side effects
+- Multi-tenant: registro publico, tenant isolation, ownership validation
 - Service layer obligatorio (auth -> authorize -> validate -> service -> audit -> revalidate)
 - Security checklists completos (IDOR, FK validation, ownership, upload validation)
-- Prisma Extension multi-tenant (solo itera-lex, pero el patron es reusable)
+- Ecosistema: integración via Itera Estudio API para generación de imágenes (Shopear banners, IteraLink banners)
+- AI (donde aplique): prompts en ingles, rate limiting, confirmacion humana para side effects
 
-**Referencia**: itera-lex es el proyecto mas maduro del grupo.
+**Referencia**: itera-lex es el proyecto mas maduro del grupo (MT completo, billing, AI).
+
+**Nota**: itera-link y shope-ar están en transición de single-tenant a multi-tenant. alquimica-hub es el repo legacy de IteraLink (solo producción del cliente, no recibe features nuevas).
 
 ---
 
-### Grupo 2 — Web + Catalogo + Admin
+### Grupo 2 — Web + Catalogo + Admin (clientes)
 
-**Proyectos**: abundancia-hogar, bambu-web-corporativa-catalogo, alquimica-web-corporativa, alquimica-hub, presskit-ar
+**Proyectos**: bambu-web-corporativa-catalogo, alquimica-web-corporativa, presskit-ar
 
 **Stack comun**: Next.js 16 + Prisma (5 o 7) + auth + sitio publico + panel admin
 
@@ -62,10 +66,6 @@
 - Zod forms con React Hook Form
 - Deploy Docker/Coolify
 - Queries publicas filtrar por estado (published/active)
-
-**Diferencias internas**:
-- abundancia-hogar, bambu, alquimica-web: Prisma 7 + BetterAuth
-- alquimica-hub, presskit-ar: Prisma 5 + NextAuth v5
 
 ---
 
