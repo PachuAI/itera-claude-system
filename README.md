@@ -52,9 +52,15 @@ Sistema de productividad para proyectos Next.js con Claude Code. Contiene el tem
 1. Crear el proyecto Next.js:
 
 ```bash
-npx create-next-app@latest "C:/ALL MY PROJECTS/nextjs/mi-proyecto" \
+# Linux (laptop)
+pnpm create next-app ~/projects/mi-proyecto \
   --yes --typescript --tailwind --eslint --app --src-dir \
-  --import-alias "@/*" --use-npm
+  --import-alias "@/*" --use-pnpm
+
+# Windows (desktop)
+pnpm create next-app "C:/ALL MY PROJECTS/nextjs/mi-proyecto" \
+  --yes --typescript --tailwind --eslint --app --src-dir \
+  --import-alias "@/*" --use-pnpm
 ```
 
 2. Copiar el contenido de `_template/` al proyecto creado (`.claude/`, `.planning/`, `CLAUDE.md`).
@@ -101,7 +107,7 @@ Next.js 16 · React 19 · TypeScript · Tailwind v4 · shadcn/ui · Prisma 7 · 
 ### Sincronizacion de reglas entre proyectos
 
 ```
-/sync   →  Desde C:\ALL MY PROJECTS\ — detecta reglas que faltan en proyectos del mismo grupo de afinidad
+/sync   →  Desde el directorio de proyectos — detecta reglas que faltan en proyectos del mismo grupo de afinidad
 ```
 
 Ver `PROJECT-MAP.md` para los grupos de afinidad y `INFRA.md` para datos de deploy.
