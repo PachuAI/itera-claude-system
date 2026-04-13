@@ -29,13 +29,13 @@
 
 ```bash
 # Instalar Playwright Test
-npm init playwright@latest
+pnpm create playwright
 
 # Instalar solo Chromium (mas rapido)
-npx playwright install chromium
+pnpm exec playwright install chromium
 
 # Inicializar Test Agents (opcional, para asistencia IA)
-npx playwright init-agents
+pnpm exec playwright init-agents
 ```
 
 ### Estructura de archivos
@@ -88,7 +88,7 @@ export default defineConfig({
   ],
   // Levantar el server de dev si no esta corriendo
   webServer: {
-    command: 'npm run dev',
+    command: 'pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
@@ -287,28 +287,28 @@ test.describe('Flujo de clientes', () => {
 
 ```bash
 # Correr todos
-npx playwright test
+pnpm exec playwright test
 
 # Correr un archivo especifico
-npx playwright test e2e/flows/clientes.spec.ts
+pnpm exec playwright test e2e/flows/clientes.spec.ts
 
 # Correr con browser visible (debugging)
-npx playwright test --headed
+pnpm exec playwright test --headed
 
 # Correr y abrir reporte HTML al terminar
-npx playwright test --reporter=html
+pnpm exec playwright test --reporter=html
 
 # Ver ultimo reporte
-npx playwright show-report
+pnpm exec playwright show-report
 
 # Correr en background mientras trabajas en otra cosa
-npx playwright test --reporter=html 2>&1 | tee test-results.log &
+pnpm exec playwright test --reporter=html 2>&1 | tee test-results.log &
 
 # Grabar interacciones para generar codigo base
-npx playwright codegen http://localhost:3000
+pnpm exec playwright codegen http://localhost:3000
 
 # Ver trace de un test fallido
-npx playwright show-trace test-results/trace.zip
+pnpm exec playwright show-trace test-results/trace.zip
 ```
 
 ---
@@ -325,7 +325,7 @@ Pedirle a Claude que escriba archivos `.spec.ts` basados en lo que descubrio.
 Los tests deben seguir todas las reglas de esta guia.
 
 ### Paso 3: Ejecutar y refinar
-Correr `npx playwright test` en otra terminal.
+Correr `pnpm exec playwright test` en otra terminal.
 Si fallan, compartir el error con Claude para que ajuste.
 
 ### Paso 4: Healing automatico (opcional)
@@ -451,7 +451,7 @@ Errores reales encontrados al generar tests con IA. Cada entrada incluye el proy
 
 **Windows: `taskkill //F //IM node.exe` mata TODOS los procesos Node**
 - Incluyendo otros dev servers, Playwright MCP, y cualquier cosa Node
-- Solucion: usar `npx kill-port <puerto>` para matar solo el proceso en un puerto especifico
+- Solucion: usar `pnpm exec kill-port <puerto>` para matar solo el proceso en un puerto especifico
 
 **Prisma Client desactualizado con dev server corriendo**
 - Si `prisma generate` falla por DLL locked (dev server tiene el archivo abierto), el query engine queda viejo y tira `PrismaClientKnownRequestError` en runtime

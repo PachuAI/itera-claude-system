@@ -81,7 +81,7 @@ pnpm create next-app "C:/ALL MY PROJECTS/nextjs/mi-proyecto" \
 Los scripts en `scripts/` automatizan verificaciones que antes dependían de recordar reglas del CLAUDE.md:
 
 ```bash
-npm run check:quality    # Ejecuta todos los checks
+pnpm check:quality    # Ejecuta todos los checks
 bash scripts/check-all.sh  # Alternativa directa
 ```
 

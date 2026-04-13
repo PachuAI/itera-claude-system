@@ -6,8 +6,8 @@
 
 1. Planificar antes de codear: disenar pantallas/flujo UX. Implementar DESPUES de aprobacion.
 2. Verificar en navegador: resultado verificable en `localhost:3000` al final de cada feature.
-3. **Lint obligatorio**: correr `npm run lint` despues de terminar cambios y ANTES de commitear.
-4. **Lint en Windows**: si `npm run lint` falla por paths con espacios -> fallback: `npx eslint src prisma` directo.
+3. **Lint obligatorio**: correr `pnpm lint` despues de terminar cambios y ANTES de commitear.
+4. **Lint en Windows**: si `pnpm lint` falla por paths con espacios -> fallback: `pnpm exec eslint src prisma` directo.
 5. Referencias en `.planning/` — STATE.md y GUARDRAILS.md en raiz. Producto en `product/`. Guias operativas en `guides/`. Checklists en `audits/`.
 6. **Write tool**: archivos >300 lineas -> Write esqueleto base + Edit en partes -> NUNCA 1-shot con todo el contenido (falla con "missing content").
 7. **Auditoria de seguridad**: despues de agregar/modificar API routes, services con writes, modelos nuevos, o endpoints publicos -> correr `.planning/audits/SECURITY-AUDIT.md` -> cubre IDOR, ownership, campos de control, sesion vs DB.
@@ -102,7 +102,7 @@ Estas convenciones son obligatorias en todo proyecto nuevo. No hay alternativas.
 
 ### TypeScript / ESLint
 
-- Despues de cambios -> `npm run lint` — unused imports es el error MAS comun
+- Despues de cambios -> `pnpm lint` — unused imports es el error MAS comun
 - ANTES de modificar interface compartida -> grep TODOS los usos -> actualizar cada uno
 - ANTES de usar campo/prop -> verificar que existe en schema/interface, no asumir
 - Union types -> `'key' in object` para type narrowing, no acceder directo
@@ -117,7 +117,7 @@ Estas convenciones son obligatorias en todo proyecto nuevo. No hay alternativas.
 
 - Import SIEMPRE desde `@/lib/generated/prisma/client` -> NUNCA `@prisma/client`
 - `prisma.config.ts` requerido en raiz (datasource URL ahi, NO en schema.prisma)
-- **`prisma.config.ts` DEBE cargar dotenv**: `try { await import("dotenv/config"); } catch {}` en la primera linea -> sin esto `prisma generate` dentro de `npm run build` falla con `Cannot resolve environment variable: DATABASE_URL`
+- **`prisma.config.ts` DEBE cargar dotenv**: `try { await import("dotenv/config"); } catch {}` en la primera linea -> sin esto `prisma generate` dentro de `pnpm build` falla con `Cannot resolve environment variable: DATABASE_URL`
 - `db push` NO es seguro para ENUMs -> SQL manual
 - `db push` NO regenera client -> siempre `db push && prisma generate` juntos
 - 2+ writes relacionados -> `$transaction` — incluir audit/actividad DENTRO de la transaccion, no despues
@@ -130,6 +130,10 @@ Estas convenciones son obligatorias en todo proyecto nuevo. No hay alternativas.
 - **Campos `Decimal`** de Prisma -> NO pasar directo a Client Components -> serializar con `Number(v)` en la page -> crear tipo `SerializedX` con `Omit + { campo: number | null }`
 - **Campos `Date`** de Prisma -> NO pasar directo a Client Components -> serializar con `.toISOString()` en la page -> crear tipo con `campo: string`
 - Queries ad-hoc desde terminal -> `psql` directo (tablas en snake_case) -> `source .env && psql "${DATABASE_URL%%\?*}" -c "SELECT ..."` -> NUNCA `tsx -e` / `node -e` (Prisma 7 client es ESM-only)
+- **Scripts CLI** (`prisma/seed.ts`, `scripts/*.ts` via `tsx`) -> NUNCA importar `@/lib/{auth,env,db}` -> tiran por `import "server-only"` o por validacion Zod de envs que el script ni usa -> patron: instancias locales (`new PrismaClient({ adapter })`, `betterAuth({...})` inline leyendo `process.env.X` puntual)
+- **`new PrismaClient(...)` SIEMPRE necesita argumento explicito** -> sin args tira `Cannot read '__internal' of undefined`. Engine type "client" (default Prisma 7) ademas requiere `adapter` o `accelerateUrl`. Patron Postgres self-hosted: `new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) })` (instalar `@prisma/adapter-pg` + `pg`)
+- **Catch de errores Prisma con `instanceof Prisma.PrismaClientKnownRequestError`** falla el narrowing de TS en Prisma 7 (re-exports forwarded) -> usar duck-typing guard sobre `e.code` (string que arranca con `P`)
+- **Phantom dep `@prisma/client-runtime-utils`**: el client generado hace `require("@prisma/client-runtime-utils")`, pnpm NO lo expone como dep directa -> Next dev tira `Module not found`. Agregar como dep directa y meter `@prisma/client`, `@prisma/adapter-pg`, `@prisma/client-runtime-utils`, `pg` en `serverExternalPackages` de `next.config.ts`
 
 ---
 

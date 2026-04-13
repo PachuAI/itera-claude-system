@@ -12,7 +12,7 @@
 |----------|------|------|----|-------|-----------|-------------|--------|--------|
 | itera-lex | BA+MT | P7 | Anthropic+Google | R2+Drive | landing+blog | calendar, payments, transcription, tts, pdf | activo | si |
 | itera-estudio | BA | P7 | Gemini | R2 | — | API interna (ecosistema) | activo | si |
-| itera-link | BA | P7 | — (Itera Estudio API) | R2 | landing+SEO | banners IA, link-in-bio, MT en desarrollo | activo | si |
+| linkea2 | BA | P7 | — (Itera Estudio API) | R2 | landing+SEO | banners IA, link-in-bio, MT en desarrollo | activo | si |
 | shope-ar (Shopear) | BA | P7 | — (Itera Estudio API) | R2 | landing+SEO | whatsapp (checkout), MT en desarrollo | activo | si |
 | itera-chatbots-platform | BA | P7 | AI SDK v6 | — | — | realtime (SSE widget) | stand-by | no |
 | bambu-web-corporativa | BA | P7 | — | R2 | corporativa+catalogo | email (captacion) | activo | si |
@@ -34,7 +34,7 @@
 
 ### Grupo 1 — SaaS (con o sin IA)
 
-**Proyectos**: itera-lex, itera-estudio, itera-link, shope-ar (Shopear)
+**Proyectos**: itera-lex, itera-estudio, linkea2, shope-ar (Shopear)
 
 **Stack comun**: Next.js 16 + Prisma 7 + BetterAuth + Tailwind v4 + shadcn/ui
 
@@ -44,12 +44,12 @@
 - Multi-tenant: registro publico, tenant isolation, ownership validation
 - Service layer obligatorio (auth -> authorize -> validate -> service -> audit -> revalidate)
 - Security checklists completos (IDOR, FK validation, ownership, upload validation)
-- Ecosistema: integración via Itera Estudio API para generación de imágenes (Shopear banners, IteraLink banners)
+- Ecosistema: integración via Itera Estudio API para generación de imágenes (Shopear banners, Linkea2 banners)
 - AI (donde aplique): prompts en ingles, rate limiting, confirmacion humana para side effects
 
 **Referencia**: itera-lex es el proyecto mas maduro del grupo (MT completo, billing, AI).
 
-**Nota**: itera-link y shope-ar están en transición de single-tenant a multi-tenant. alquimica-hub es el repo legacy de IteraLink (solo producción del cliente, no recibe features nuevas).
+**Nota**: linkea2 y shope-ar están en transición de single-tenant a multi-tenant. alquimica-hub es el repo legacy de Linkea2 (solo producción del cliente, no recibe features nuevas).
 
 ---
 

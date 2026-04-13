@@ -155,9 +155,9 @@ Mostrar al usuario:
 ### Próximos pasos
 
 1. Crear el proyecto Next.js:
-   npx create-next-app@latest "C:/ALL MY PROJECTS/nextjs/[nombre]" \
+   pnpm create next-app@latest "C:/ALL MY PROJECTS/nextjs/[nombre]" \
      --yes --typescript --tailwind --eslint --app --src-dir \
-     --import-alias "@/*" --use-npm
+     --import-alias "@/*" --use-pnpm
 
 2. Copiar los archivos de este kickstart al proyecto creado (si no lo hiciste ya).
 

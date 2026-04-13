@@ -39,7 +39,7 @@ El check debe ser **ACCIONABLE**, no descriptivo:
 **Check preventivo**: Revisar imports
 
 # BIEN - Especifico y mecanico
-**Check preventivo**: Despues de CADA archivo -> `npm run lint` -> Si falla, arreglar ANTES de continuar
+**Check preventivo**: Despues de CADA archivo -> `pnpm lint` -> Si falla, arreglar ANTES de continuar
 ```
 
 Formato: `[CUANDO] -> [ACCION ESPECIFICA] -> [QUE HACER SI FALLA]`

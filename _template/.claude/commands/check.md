@@ -133,7 +133,7 @@ Si el proyecto tiene extension Prisma multi-tenant:
 ### Check H: Lint (si cualquier archivo `.ts` o `.tsx`)
 
 ```bash
-npx eslint src prisma --quiet 2>/dev/null | head -50
+pnpm exec eslint src prisma --quiet 2>/dev/null | head -50
 ```
 
 **SIEMPRE correr si hubo cambios de codigo.**

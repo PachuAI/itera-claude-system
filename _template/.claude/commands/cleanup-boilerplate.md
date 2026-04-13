@@ -12,7 +12,7 @@ Eliminar archivos y carpetas residuales del proceso de kickstart.
 ## Cuándo ejecutar
 
 - Después del kickstart completo (pasos 0-10)
-- Cuando `npm run build` pasa sin errores
+- Cuando `pnpm build` pasa sin errores
 - Cuando ya se hizo el primer commit
 - Cuando sospechas que quedó algo del setup sin limpiar
 
@@ -21,7 +21,7 @@ Eliminar archivos y carpetas residuales del proceso de kickstart.
 ANTES de limpiar, verificar que el proyecto está sano:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Si falla, NO limpiar. No es problema de limpieza.
@@ -106,12 +106,12 @@ Si hay matches → esos archivos necesitan ser completados con datos del proyect
 
 ```
 Cleanup:
-- [ ] Pre-check: npm run build pasa
+- [ ] Pre-check: pnpm build pasa
 - [ ] Detectar: listar todos los residuos encontrados
 - [ ] Confirmar: mostrar al usuario qué se va a eliminar
 - [ ] Eliminar: borrar archivos y carpetas residuales
 - [ ] Verificar: confirmar estructura correcta
-- [ ] Post-check: npm run build sigue pasando
+- [ ] Post-check: pnpm build sigue pasando
 ```
 
 ### Paso 1: Detectar
@@ -194,7 +194,7 @@ Confirmar que:
 ### Paso 5: Post-check
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Reportar:

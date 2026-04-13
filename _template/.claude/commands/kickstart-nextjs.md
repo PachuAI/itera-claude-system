@@ -91,7 +91,7 @@ Prisma CLI lee `.env`. Next.js runtime lee `.env.local`. El DATABASE_URL debe es
 
 ### lint-staged 16.x + archivos untracked
 
-lint-staged 16.x falla con `fatal: Needed a single revision` si hay archivos untracked. Fix: `.husky/pre-commit` → `npx lint-staged --no-stash`.
+lint-staged 16.x falla con `fatal: Needed a single revision` si hay archivos untracked. Fix: `.husky/pre-commit` → `pnpm exec lint-staged --no-stash`.
 
 ---
 
@@ -136,7 +136,7 @@ Verificar: `ls -la` muestra carpeta COMPLETAMENTE vacía.
 ### Paso 1: Crear proyecto Next.js
 
 ```bash
-npx create-next-app@latest . --yes --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
+pnpm create next-app@latest . --yes --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-pnpm
 ```
 
 **Flags críticos**:
@@ -147,30 +147,30 @@ npx create-next-app@latest . --yes --typescript --tailwind --eslint --app --src-
 
 ```bash
 # BASE + QUASI-BASE (producción)
-npm install class-variance-authority clsx tailwind-merge lucide-react sonner tailwindcss-animate zod server-only
+pnpm add class-variance-authority clsx tailwind-merge lucide-react sonner tailwindcss-animate zod server-only
 
 # BASE + QUASI-BASE (desarrollo)
-npm install -D prettier vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react jsdom husky lint-staged postcss dotenv tsx kill-port
+pnpm add -D prettier vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react jsdom husky lint-staged postcss dotenv tsx kill-port
 ```
 
 Si el usuario pidió módulos opcionales:
 
 ```bash
 # db + auth — Prisma 7 + BetterAuth
-npm install @prisma/client better-auth @prisma/adapter-pg pg
-npm install -D prisma @types/pg
+pnpm add @prisma/client better-auth @prisma/adapter-pg pg
+pnpm add -D prisma @types/pg
 
 # ai — Google Gemini
-npm install @google/genai
+pnpm add @google/genai
 
 # storage — Cloudflare R2
-npm install @aws-sdk/client-s3
+pnpm add @aws-sdk/client-s3
 ```
 
 ### Paso 3: Inicializar shadcn/ui
 
 ```bash
-npx shadcn@latest init --defaults
+pnpm dlx shadcn@latest init --defaults
 ```
 
 `--defaults`: sin esto se cuelga en prompt de base color.
@@ -192,7 +192,7 @@ Reemplazar `MASTER_PASS` con el password real del usuario. NO loguear el passwor
 Solo si módulo `db`.
 
 ```bash
-npx prisma init
+pnpm exec prisma init
 ```
 
 Post-init:
@@ -202,8 +202,8 @@ Post-init:
 4. Escribir DATABASE_URL en `.env` Y `.env.local` con Write tool (nunca echo en bash — escapa mal `$`, `!`, `#`)
 
 ```bash
-npx prisma db push
-npx prisma generate --generator client
+pnpm exec prisma db push
+pnpm exec prisma generate --generator client
 ```
 
 ### Paso 6: Escribir/editar archivos de configuración
@@ -229,7 +229,7 @@ Editar existentes:
 
 **Infraestructura (siempre)**:
 - `.nvmrc` → contenido: `22`
-- `Dockerfile` → multi-stage: deps (npm ci) → builder (build) → runner (standalone, `ENV TZ=America/Argentina/Buenos_Aires`)
+- `Dockerfile` → multi-stage: deps (pnpm install --frozen-lockfile) → builder (build) → runner (standalone, `ENV TZ=America/Argentina/Buenos_Aires`)
 - `.dockerignore` → excluir: node_modules, .git, .env*, .next, .planning, .claude
 
 **Tipos y utils compartidos (siempre)**:
@@ -362,10 +362,10 @@ rm -rf "$SETUP_DIR"
 ### Paso 8: Setup git hooks
 
 ```bash
-npx husky init
+pnpm exec husky init
 ```
 
-Editar `.husky/pre-commit` → reemplazar contenido con `npx lint-staged --no-stash`.
+Editar `.husky/pre-commit` → reemplazar contenido con `pnpm exec lint-staged --no-stash`.
 
 Agregar a `package.json`:
 ```json
@@ -396,7 +396,7 @@ gh repo create NOMBRE --private --source=. --push
 ### Paso 10: Verificación final
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Si pasa, reportar:
