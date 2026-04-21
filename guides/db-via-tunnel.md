@@ -24,7 +24,7 @@ Cubre tres sub-casos que comparten la misma técnica de tunnel:
 **No usar** para:
 
 - Seed / creación de datos de aplicación → **carril API**, ver `guides/seed-via-api.md`
-- Schema rollout (DDL, CREATE INDEX, ALTER TYPE, enums) → carril dedicado por repo (iteralex tiene `pnpm db:migrate:prod`; shope-ar hoy no tiene carril 3, el schema se aplica via `prisma db push` en el deploy)
+- Schema rollout (DDL, CREATE INDEX, ALTER TYPE, enums) → carril 3 unificado, ver `guides/db-schema-rollout.md`
 
 ---
 
@@ -204,6 +204,6 @@ El patrón legacy queda bien para:
 | Repo | Ver datos específicos en |
 |---|---|
 | `shope-ar` | `shope-ar/CLAUDE.md` § "DB operations" |
-| `itera-lex` | `itera-lex/.planning/guides/DB-OPERATIONS.md` (doc origen de esta doctrina de 3 carriles) |
+| `itera-lex` | `itera-lex/CLAUDE.md` § "DB operations" |
 
 Al agregar un repo nuevo: sumar fila acá + crear sección "DB operations" en el `CLAUDE.md` del repo con VPS, PG UUID, App UUID, DB name, user, comando de obtención de password. **No duplicar el método** en cada repo.

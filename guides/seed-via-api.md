@@ -2,6 +2,12 @@
 
 Método canónico para poblar, resetear o provisionar datos en repos SaaS ITERA que exponen una route `POST /api/admin/seed` con Bearer auth.
 
+Este es el **carril 1** de la doctrina de DB ops ITERA:
+
+- Carril 1: seed / reset / provision de datos de aplicación → este documento
+- Carril 2: query / `pg_dump` / `pg_restore` / GUI tools → `guides/db-via-tunnel.md`
+- Carril 3: schema rollout (DDL, índices, enums) → `guides/db-schema-rollout.md`
+
 **Reemplaza al método legacy** de bcryptjs local + UPSERT SQL directo en psql (ver `reference_coolify_admin_seed.OBSOLETE.md`).
 
 ---
@@ -16,7 +22,10 @@ Para datos de **aplicación** que dependen del runtime (Prisma, BetterAuth, lóg
 - Propagación de defaults a registros existentes
 - Cualquier `target` que el repo exponga
 
-**No usar** para: DDL, índices, enums, schema rollout, verificación de drift. Eso es otro carril.
+**No usar** para:
+
+- DDL, índices, enums, schema rollout, verificación de drift → carril 3, ver `guides/db-schema-rollout.md`
+- Queries ad-hoc, `pg_dump`, `pg_restore`, GUI tools → carril 2, ver `guides/db-via-tunnel.md`
 
 ---
 
@@ -145,6 +154,6 @@ Validar respuesta `200 OK` y el payload con el resultado del target.
 | Repo | Procedimiento | Detalle en |
 |---|---|---|
 | `shope-ar` | B (Bearer + sesión platform admin) | `shope-ar/CLAUDE.md` § Seed en prod |
-| `itera-lex` | A (Bearer only) | `itera-lex/.planning/guides/DEPLOY-SEEDS.md` (pendiente migrar al formato unificado) |
+| `itera-lex` | A (Bearer only) | `itera-lex/CLAUDE.md` § Seed en prod |
 
 Al agregar un repo nuevo: sumar fila acá + crear sección "Seed en prod" en el `CLAUDE.md` del repo con los datos específicos. **No duplicar el método en cada repo.**

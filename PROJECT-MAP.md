@@ -44,6 +44,7 @@
 - Multi-tenant: registro publico, tenant isolation, ownership validation
 - Service layer obligatorio (auth -> authorize -> validate -> service -> audit -> revalidate)
 - Security checklists completos (IDOR, FK validation, ownership, upload validation)
+- DB ops: 3 carriles canonicos (seed via API + SSH tunnel + schema rollout manual) — `guides/seed-via-api.md`, `guides/db-via-tunnel.md`, `guides/db-schema-rollout.md`. Cada repo lista sus datos especificos en el CLAUDE.md del repo, no duplica metodo.
 - Ecosistema: integración via Itera Estudio API para generación de imágenes (Shopear banners, Linkea2 banners)
 - AI (donde aplique): prompts en ingles, rate limiting, confirmacion humana para side effects
 

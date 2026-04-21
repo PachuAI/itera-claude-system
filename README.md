@@ -38,8 +38,13 @@ Sistema de productividad para proyectos Next.js con Claude Code. Contiene el tem
 │       └── FEATURE-CHANGELOG.md    # Features de usuario por modulo
 │
 ├── PROJECT-MAP.md          # Mapa de proyectos por capas y grupos de afinidad
+├── TOOLING-STANDARD.md     # Contrato canonico de scripts y tooling cross-repo
 ├── INFRA.md                # Indice de deploy (Coolify UUIDs, URLs, puertos, DBs)
 ├── E2E-TESTING-GUIDE.md    # Guia de testing E2E con Playwright (setup, patrones, workflow IA)
+├── guides/                 # Metodos canonicos cross-repo (DB ops: carriles 1/2/3)
+│   ├── seed-via-api.md         # Carril 1 — seed / reset / provision via API
+│   ├── db-via-tunnel.md        # Carril 2 — query / pg_dump / restore via SSH tunnel
+│   └── db-schema-rollout.md    # Carril 3 — schema rollout manual (DDL / indices / enums)
 ├── modelo prompt.txt       # Prompt modelo para iniciar un proyecto
 ├── INFO.txt                # Descripcion general del sistema
 └── .planning/              # Planning interno de este repo
@@ -81,7 +86,7 @@ pnpm create next-app "C:/ALL MY PROJECTS/nextjs/mi-proyecto" \
 Los scripts en `scripts/` automatizan verificaciones que antes dependían de recordar reglas del CLAUDE.md:
 
 ```bash
-pnpm check:quality    # Ejecuta todos los checks
+pnpm quality:check    # Ejecuta todos los checks
 bash scripts/check-all.sh  # Alternativa directa
 ```
 
@@ -103,6 +108,18 @@ El kickstart pregunta cual usar y configura el proyecto acorde.
 ## Stack base
 
 Next.js 16 · React 19 · TypeScript · Tailwind v4 · shadcn/ui · Prisma 7 · PostgreSQL · BetterAuth · Zod v4
+
+## Carriles operativos de DB
+
+El directorio `guides/` contiene los 3 carriles canonicos para operar DBs de produccion desde local. El **metodo** vive en la guia cross-repo (una sola fuente); los **datos especificos** (UUIDs, hosts, secrets, scripts) viven en la seccion correspondiente del `CLAUDE.md` de cada repo — no se duplica metodo.
+
+| Carril | Caso de uso | Guia cross-repo |
+|---|---|---|
+| 1 | seed / reset / provision de datos de app | `guides/seed-via-api.md` |
+| 2 | query / `pg_dump` / `pg_restore` / GUI tools | `guides/db-via-tunnel.md` |
+| 3 | schema rollout (DDL / indices / enums) | `guides/db-schema-rollout.md` |
+
+Repos que ya implementan el patron completo: `itera-lex`, `shope-ar`. Al sumar un repo nuevo, seguir el mismo formato: metodo en la guia + datos en el CLAUDE.md del repo.
 
 ### Sincronizacion de reglas entre proyectos
 
