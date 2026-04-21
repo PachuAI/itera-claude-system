@@ -1,6 +1,25 @@
-# Crear/resetear usuario admin en producción (Coolify + Postgres + bcryptjs)
+# [OBSOLETO] Crear/resetear usuario admin en producción (Coolify + Postgres + bcryptjs)
 
-Procedimiento validado para proyectos SaaS ITERA que corren en Coolify con Postgres y autenticación por email/password (bcryptjs). Útil cuando:
+> ⚠️ **ARCHIVO HISTÓRICO — NO USAR COMO REFERENCIA OPERATIVA.**
+>
+> Este método (generar hash bcrypt local + UPSERT SQL directo en psql desde Coolify Terminal) fue **reemplazado** por el método canónico de seed via API protegida.
+>
+> **Método vigente**: `~/projects/itera-claude-system/guides/seed-via-api.md`
+>
+> **Se preserva este archivo** únicamente por trazabilidad: documenta un método que funcionó históricamente cuando no existía una API `/api/admin/seed` en el repo. Si ves código o docs que referencian este archivo como canónico, están desactualizados — apuntarlos a la guía nueva.
+>
+> Razones por las que fue descartado:
+> - Frágil (requiere entrar al container de Postgres vía UI de Coolify)
+> - Mezcla data ops con acceso low-level a infra
+> - No es reusable cross-repo
+> - No cubre targets complejos (reset, provision, demo refresh)
+> - No deja rastro auditable
+>
+> El contenido de abajo queda como referencia histórica.
+
+---
+
+Procedimiento validado (histórico) para proyectos SaaS ITERA que corrían en Coolify con Postgres y autenticación por email/password (bcryptjs). Útil cuando:
 
 - El container de producción no tiene `tsx` ni devDependencies → no podés ejecutar `seed:admin` de TypeScript.
 - El password del admin solo vive como hash bcrypt en DB.
